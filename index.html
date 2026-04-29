@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>OrPlay Beta</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #050510;
+  color: white;
+  text-align: center;
+}
+
+/* SPLASH */
+#splash {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #050510, #1a0033);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.logo {
+  font-size: 60px;
+  color: #a855f7;
+}
+
+/* MAIN */
+#main, #beta {
+  display: none;
+  padding: 20px;
+}
+
+/* CARDS */
+.card {
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 15px;
+  margin: 10px;
+}
+
+/* BUTTON */
+button {
+  padding: 15px 25px;
+  border-radius: 10px;
+  border: none;
+  background: #7e22ce;
+  color: white;
+  margin-top: 10px;
+}
+
+/* INPUT */
+input {
+  padding: 12px;
+  width: 90%;
+  border-radius: 10px;
+  border: none;
+  margin: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="logo"><i class="fa-solid fa-gamepad"></i></div>
+  <p>Carregando...</p>
+</div>
+
+<!-- TELA NORMAL -->
+<div id="main">
+
+  <h1>OrPlay Beta</h1>
+  <p>Se inscreva para testar antes de todos 🚀</p>
+
+  <input id="name" placeholder="Seu nome">
+  <input id="email" placeholder="Seu email">
+
+  <button onclick="subscribe()">
+    <i class="fa-solid fa-user-plus"></i> INSCREVER-SE
+  </button>
+
+  <p id="status"></p>
+
+</div>
+
+<!-- ÁREA BETA -->
+<div id="beta">
+
+  <h1><i class="fa-solid fa-flask"></i> Área Beta</h1>
+
+  <div class="card">
+    <h3>📢 Atualizações</h3>
+    <p>- Sistema de salas sendo desenvolvido</p>
+    <p>- Chat de voz em teste</p>
+    <p>- Presentes chegando em breve</p>
+  </div>
+
+  <div class="card">
+    <h3>👨‍💻 Desenvolvedor</h3>
+    <p>Zurtwl</p>
+  </div>
+
+  <button onclick="logout()">
+    <i class="fa-solid fa-right-from-bracket"></i> Sair
+  </button>
+
+</div>
+
+<!-- EMAILJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+(function(){
+  emailjs.init("UU7LqkED7r68LWH2D");
+})();
+
+// SPLASH
+setTimeout(() => {
+  document.getElementById("splash").style.display = "none";
+
+  let user = localStorage.getItem("orplay_user");
+
+  if (user) {
+    document.getElementById("beta").style.display = "block";
+  } else {
+    document.getElementById("main").style.display = "block";
+  }
+}, 2000);
+
+// INSCRIÇÃO
+function subscribe() {
+  let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
+
+  if (!name || !email) return alert("Preencha tudo!");
+
+  localStorage.setItem("orplay_user", JSON.stringify({name, email}));
+
+  emailjs.send("service_mmxztx7", "template_5kdozw9", {
+    user_name: name,
+    user_email: email
+  });
+
+  alert("Bem-vindo à Beta!");
+
+  location.reload();
+}
+
+// SAIR
+function logout() {
+  localStorage.removeItem("orplay_user");
+  location.reload();
+}
+</script>
+
+</body>
+</html>
