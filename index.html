@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>OrPlay Beta</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(180deg, #050510, #1a0033);
+  color: white;
+}
+
+/* TOPO */
+.header {
+  padding: 20px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #a855f7;
+}
+
+/* SECOES */
+.section {
+  padding: 20px;
+  text-align: center;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  margin: 15px;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(168,85,247,0.2);
+}
+
+/* BOTAO */
+button {
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: none;
+  background: #7e22ce;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* INPUT */
+input {
+  padding: 12px;
+  width: 80%;
+  border-radius: 10px;
+  border: none;
+  margin: 5px;
+}
+
+/* CONTADOR */
+.counter {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #c084fc;
+}
+
+/* FEATURES */
+.feature {
+  margin: 10px 0;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header"> ORPLAY</div>
+
+<!-- INTRO -->
+<div class="section">
+  <h2>O novo app de voz e interacao</h2>
+  <p>Entre em salas, converse, envie presentes e suba de nivel</p>
+</div>
+
+<!-- FEATURES -->
+<div class="section">
+  <div class="card">
+    <h3>Chat de Voz</h3>
+    <p>Converse em tempo real com pessoas</p>
+  </div>
+
+  <div class="card">
+    <h3>Presentes</h3>
+    <p>Envie presentes e ganhe fama</p>
+  </div>
+
+  <div class="card">
+    <h3>Sistema de Nivel</h3>
+    <p>Suba de nivel e desbloqueie vantagens</p>
+  </div>
+
+  <div class="card">
+    <h3>Jogos</h3>
+    <p>Jogue direto nas salas com seus amigos</p>
+  </div>
+</div>
+
+<!-- BETA -->
+<div class="section">
+  <div class="card">
+
+    <h2>Fase Beta</h2>
+    <p>Se inscreva para testar antes de todo mundo</p>
+
+    <input id="name" placeholder="Seu nome">
+    <input id="email" placeholder="Seu email">
+
+    <button onclick="subscribe()">INSCREVER-SE</button>
+
+    <div class="counter">
+       <span id="count">0</span> inscritos
+    </div>
+
+    <p id="status"></p>
+
+  </div>
+</div>
+
+<script>
+let count = localStorage.getItem("orplay_count");
+let already = localStorage.getItem("orplay_user");
+
+if (!count) count = 0;
+
+document.getElementById("count").innerText = count;
+
+// se ja se inscreveu
+if (already) {
+  document.getElementById("status").innerText = "Voce ja esta na beta!";
+}
+
+function subscribe() {
+  let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
+
+  if (already) {
+    alert("Voce ja se inscreveu!");
+    return;
+  }
+
+  if (!name || !email) {
+    alert("Preencha tudo!");
+    return;
+  }
+
+  count++;
+  localStorage.setItem("orplay_count", count);
+  localStorage.setItem("orplay_user", "true");
+
+  document.getElementById("count").innerText = count;
+  document.getElementById("status").innerText = "Inscricao realizada com sucesso!";
+}
+</script>
+
+</body>
+</html>
